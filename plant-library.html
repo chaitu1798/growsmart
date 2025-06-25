@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Library - GrowSmart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .plant-card {
+        flex-basis: calc(50% - 1rem);
+      }
+    }
+    @media (max-width: 480px) {
+      .plant-card {
+        flex-basis: 100%;
+      }
+      .plant-filters {
+        justify-content: center;
+      }
+    }
+    .plant-filters {
+      display: flex;
+      gap: 0.7rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .filter-btn {
+      background: linear-gradient(90deg, #eafbe7 60%, #d0f5c9 100%);
+      border: 2px solid #b6e2b3;
+      border-radius: 2rem;
+      padding: 0.6rem 1.5rem;
+      font-weight: bold;
+      color: #388e3c;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+      font-size: 1.05rem;
+      box-shadow: 0 2px 8px rgba(108,191,67,0.07);
+      outline: none;
+    }
+    .filter-btn.active, .filter-btn:focus {
+      background: linear-gradient(90deg, #b6e2b3 60%, #eafbe7 100%);
+      color: #205c23;
+      border: 2px solid #388e3c;
+      box-shadow: 0 4px 16px rgba(56,142,60,0.10);
+    }
+    .filter-btn:hover {
+      background: #d0f5c9;
+      color: #205c23;
+      border: 2px solid #388e3c;
+    }
+    .plant-categories {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+    .plant-category-container {
+      display: block;
+    }
+    .plant-category-container.hidden {
+      display: none;
+    }
+    .plant-category-title {
+      color: #388e3c;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .plant-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+    .plant-card {
+      background: #f6fbf4;
+      border-radius: 0.8rem;
+      box-shadow: 0 2px 8px rgba(108,191,67,0.07);
+      padding: 0;
+      padding-bottom: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
+      cursor: pointer;
+    }
+    .plant-card.hidden {
+      transform: scale(0.9);
+      opacity: 0;
+      flex-basis: 0;
+      width: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+    .plant-card-content {
+      padding: 0 1.2rem;
+    }
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.visible {
+      display: flex;
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      animation: zoomIn 0.3s ease;
+    }
+    .close-btn {
+      color: #aaa;
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-plant-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 0.8rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">GrowSmart</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="plant-library.html" class="active">Plant Library</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="modern-agriculturists.html">Modern Agriculturists</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+        <li class="nav-auth nav-logout" style="display:none;"><a href="#" id="logout-link">Logout</a></li>
+        <li class="nav-auth nav-signup"><a href="signup.html">Sign Up</a></li>
+        <li class="nav-auth nav-login"><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="plant-library" class="fade-in">
+      <h2>Plant Library</h2>
+      <input type="text" id="plant-search" placeholder="Search by name..." style="width: 100%; padding: 0.8rem; border-radius: 0.5rem; border: 1px solid #ccc; margin-bottom: 1rem;">
+      <div class="plant-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="indoor">Indoor</button>
+        <button class="filter-btn" data-filter="outdoor">Outdoor</button>
+        <button class="filter-btn" data-filter="succulent">Succulents & Cacti</button>
+        <button class="filter-btn" data-filter="herb">Herbs</button>
+      </div>
+      <div class="plant-categories">
+        <div class="plant-category-container">
+          <h3 class="plant-category-title">🪴 Indoor Plants</h3>
+          <div class="plant-cards">
+            <div class="plant-card" data-category="indoor">
+              <img src="images/snakeplant.jpg" alt="Snake Plant" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Snake Plant <span>(Sansevieria)</span></h4>
+                <ul>
+                  <li><strong>Light:</strong> Low to bright indirect</li>
+                  <li><strong>Water:</strong> Every 2–3 weeks</li>
+                  <li><strong>Benefit:</strong> Air-purifying, hard to kill</li>
+                </ul>
+                <div class="plant-details-hidden" style="display:none;">
+                  <p>The Snake Plant is one of the most recommended plants for beginners. It thrives on neglect, tolerates low light, and is an excellent air purifier, removing toxins like formaldehyde from the air.</p>
+                </div>
+              </div>
+            </div>
+            <div class="plant-card" data-category="indoor">
+              <img src="images/10.jpg" alt="ZZ Plant" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>ZZ Plant <span>(Zamioculcas zamiifolia)</span></h4>
+                <ul>
+                  <li><strong>Light:</strong> Low light tolerant</li>
+                  <li><strong>Water:</strong> Once every 2 weeks</li>
+                  <li><strong>Benefit:</strong> Drought-resistant</li>
+                </ul>
+                 <div class="plant-details-hidden" style="display:none;">
+                  <p>The ZZ Plant is another low-maintenance favorite. Its wide, dark green leaves are beautiful, and it's extremely drought-tolerant thanks to its rhizomatous roots that store water.</p>
+                </div>
+              </div>
+            </div>
+            <div class="plant-card" data-category="indoor">
+              <img src="images/11.jpg" alt="Peace Lily" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Peace Lily <span>(Spathiphyllum)</span></h4>
+                <ul>
+                  <li><strong>Light:</strong> Low to medium indirect</li>
+                  <li><strong>Water:</strong> Weekly</li>
+                  <li><strong>Benefit:</strong> Removes toxins from air</li>
+                </ul>
+              </div>
+            </div>
+            <div class="plant-card" data-category="indoor">
+              <img src="images/12.jpg" alt="Pothos" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Pothos <span>(Epipremnum aureum)</span></h4>
+                <ul>
+                  <li><strong>Light:</strong> Bright, indirect</li>
+                  <li><strong>Water:</strong> Every 1–2 weeks</li>
+                  <li><strong>Benefit:</strong> Fast-growing vine, easy propagation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="plant-category-container">
+          <h3 class="plant-category-title">🌞 Outdoor Plants</h3>
+          <div class="plant-cards">
+            <div class="plant-card" data-category="outdoor">
+              <img src="images/9.jpg" alt="Hibiscus" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Hibiscus</h4>
+                <ul>
+                  <li><strong>Light:</strong> Full sun</li>
+                  <li><strong>Water:</strong> 2–3 times/week</li>
+                  <li><strong>Benefit:</strong> Bright flowers, attracts butterflies</li>
+                </ul>
+                <div class="plant-details-hidden" style="display:none;">
+                  <p>Hibiscus plants are known for their large, colorful flowers. They thrive in warm, sunny climates and attract pollinators like butterflies and hummingbirds to the garden.</p>
+                </div>
+              </div>
+            </div>
+            <div class="plant-card" data-category="outdoor">
+              <img src="images/13.jpg" alt="Bougainvillea" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Bougainvillea</h4>
+                <ul>
+                  <li><strong>Light:</strong> Full sunlight</li>
+                  <li><strong>Water:</strong> Moderate</li>
+                  <li><strong>Benefit:</strong> Hardy, drought-tolerant</li>
+                </ul>
+              </div>
+            </div>
+            <div class="plant-card" data-category="outdoor">
+              <img src="images/14.jpg" alt="Marigold" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Marigold</h4>
+                <ul>
+                  <li><strong>Light:</strong> Full sun</li>
+                  <li><strong>Water:</strong> Every other day</li>
+                  <li><strong>Benefit:</strong> Pest repellent, vibrant flowers</li>
+                </ul>
+              </div>
+            </div>
+            <div class="plant-card" data-category="outdoor">
+              <img src="images/15.jpg" alt="Tulsi (Holy Basil)" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Tulsi <span>(Holy Basil)</span></h4>
+                <ul>
+                  <li><strong>Light:</strong> Direct sunlight</li>
+                  <li><strong>Water:</strong> Daily in summer</li>
+                  <li><strong>Benefit:</strong> Medicinal and spiritual significance</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="plant-category-container">
+          <h3 class="plant-category-title">🌵 Succulents & Cacti</h3>
+          <div class="plant-cards">
+            <div class="plant-card" data-category="succulent">
+              <img src="images/16.jpg" alt="Aloe Vera" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Aloe Vera</h4>
+                <ul>
+                  <li><strong>Light:</strong> Bright light</li>
+                  <li><strong>Water:</strong> Every 2–3 weeks</li>
+                  <li><strong>Benefit:</strong> Healing plant, gel for burns</li>
+                </ul>
+              </div>
+            </div>
+            <div class="plant-card" data-category="succulent">
+              <img src="images/17.jpg" alt="Echeveria" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Echeveria</h4>
+                <ul>
+                  <li><strong>Light:</strong> Bright, direct</li>
+                  <li><strong>Water:</strong> Infrequent</li>
+                  <li><strong>Benefit:</strong> Compact and colorful</li>
+                </ul>
+              </div>
+            </div>
+            <div class="plant-card" data-category="succulent">
+              <img src="images/18.jpg" alt="Jade Plant" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Jade Plant <span>(Crassula)</span></h4>
+                <ul>
+                  <li><strong>Light:</strong> Bright indirect</li>
+                  <li><strong>Water:</strong> Once every 2 weeks</li>
+                  <li><strong>Benefit:</strong> Symbol of prosperity</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="plant-category-container">
+          <h3 class="plant-category-title">🌿 Herbs</h3>
+          <div class="plant-cards">
+            <div class="plant-card" data-category="herb">
+              <img src="images/19.jpg" alt="Mint" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Mint</h4>
+                <ul>
+                  <li><strong>Light:</strong> Partial sun</li>
+                  <li><strong>Water:</strong> Regularly, moist soil</li>
+                  <li><strong>Use:</strong> Fresh leaves in food and drinks</li>
+                </ul>
+              </div>
+            </div>
+            <div class="plant-card" data-category="herb">
+              <img src="images/20.jpg" alt="Coriander (Cilantro)" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Coriander <span>(Cilantro)</span></h4>
+                <ul>
+                  <li><strong>Light:</strong> Full to partial sunlight</li>
+                  <li><strong>Water:</strong> Keep soil slightly moist</li>
+                  <li><strong>Use:</strong> Cooking herb, fast-growing</li>
+                </ul>
+              </div>
+            </div>
+            <div class="plant-card" data-category="herb">
+              <img src="images/21.jpg" alt="Lemongrass" class="plant-card-img">
+              <div class="plant-card-content">
+                <h4>Lemongrass</h4>
+                <ul>
+                  <li><strong>Light:</strong> Full sun</li>
+                  <li><strong>Water:</strong> Moderate</li>
+                  <li><strong>Use:</strong> Tea, insect repellent</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <div id="plant-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <img src="" alt="" id="modal-img" class="modal-plant-img">
+      <h2 id="modal-title"></h2>
+      <div id="modal-details"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 GrowSmart. All rights reserved.</p>
+  </footer>
+  <script src="js/script.js"></script>
+  <script>
+    function updateAuthNav() {
+      const isLoggedIn = localStorage.getItem('growsmart_logged_in') === 'true';
+      document.querySelector('.nav-signup').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-login').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-logout').style.display = isLoggedIn ? '' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthNav();
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('growsmart_logged_in');
+          updateAuthNav();
+          window.location.href = 'login.html';
+        });
+      }
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const plantCards = document.querySelectorAll('.plant-card');
+      const searchInput = document.getElementById('plant-search');
+      const modal = document.getElementById('plant-modal');
+      const closeModalBtn = modal.querySelector('.close-btn');
+      const categoryContainers = document.querySelectorAll('.plant-category-container');
+
+      function filterAndSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+
+        // Show/hide cards by filter and search
+        plantCards.forEach(card => {
+          const category = card.dataset.category;
+          const name = card.querySelector('h4').textContent.toLowerCase();
+          const categoryMatch = activeFilter === 'all' || category === activeFilter;
+          const searchMatch = name.includes(searchTerm);
+          if (categoryMatch && searchMatch) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+        // Show/hide category containers
+        categoryContainers.forEach(container => {
+          const visibleCards = container.querySelectorAll('.plant-card:not(.hidden)');
+          if (visibleCards.length > 0) {
+            container.classList.remove('hidden');
+          } else {
+            container.classList.add('hidden');
+          }
+        });
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          filterAndSearch();
+        });
+      });
+      
+      searchInput.addEventListener('input', filterAndSearch);
+
+      plantCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const imgSrc = card.querySelector('.plant-card-img').src;
+          const title = card.querySelector('h4').innerHTML;
+          const details = card.querySelector('.plant-details-hidden').innerHTML;
+
+          modal.querySelector('#modal-img').src = imgSrc;
+          modal.querySelector('#modal-title').innerHTML = title;
+          modal.querySelector('#modal-details').innerHTML = details;
+
+          modal.classList.add('visible');
+        });
+      });
+
+      const closeModal = () => modal.classList.remove('visible');
+      closeModalBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Initial filter
+      filterAndSearch();
+    });
+  </script>
+</body>
+</html> 

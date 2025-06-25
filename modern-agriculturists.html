@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Agriculturists and Innovators - GrowSmart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .innovators-section {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    .innovator-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .innovator-box {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      width: 300px;
+      padding: 1.5rem 1rem 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 1s forwards;
+    }
+    .innovator-box:nth-child(1) { animation-delay: 0.1s; }
+    .innovator-box:nth-child(2) { animation-delay: 0.3s; }
+    .innovator-box:nth-child(3) { animation-delay: 0.5s; }
+    .innovator-box:nth-child(4) { animation-delay: 0.7s; }
+    .innovator-box:nth-child(5) { animation-delay: 0.9s; }
+    .innovator-box:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    }
+    .innovator-photo {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 3px solid #6cbf43;
+      background: #f4f4f4;
+    }
+    .innovator-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+      text-align: center;
+    }
+    .innovator-country {
+      font-size: 0.95rem;
+      color: #6cbf43;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .innovator-known {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      text-align: center;
+    }
+    .innovator-contribution {
+      font-size: 0.98rem;
+      color: #444;
+      text-align: center;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">GrowSmart</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="plant-library.html">Plant Library</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="modern-agriculturists.html" class="active">Modern Agriculturists</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+        <li class="nav-auth nav-logout" style="display:none;"><a href="#" id="logout-link">Logout</a></li>
+        <li class="nav-auth nav-signup"><a href="signup.html">Sign Up</a></li>
+        <li class="nav-auth nav-login"><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="innovators-section fade-in">
+      <h2 style="text-align:center; margin-bottom:2rem;">Modern Agriculturists and Innovators</h2>
+      <div class="innovator-list">
+        <div class="innovator-box">
+          <img src="images/1.jpg" alt="Rattan Lal" class="innovator-photo">
+          <div class="innovator-name">Rattan Lal</div>
+          <div class="innovator-country">India/USA</div>
+          <div class="innovator-known"><strong>Known for:</strong> Soil science and carbon sequestration.</div>
+          <div class="innovator-contribution"><strong>Contribution:</strong> Awarded the 2020 World Food Prize for work on sustainable soil management and combating climate change.</div>
+        </div>
+        <div class="innovator-box">
+          <img src="images/2.jpg" alt="Vandana Shiva" class="innovator-photo">
+          <div class="innovator-name">Vandana Shiva</div>
+          <div class="innovator-country">India</div>
+          <div class="innovator-known"><strong>Known for:</strong> Advocacy of organic farming and seed sovereignty.</div>
+          <div class="innovator-contribution"><strong>Contribution:</strong> Critic of industrial agriculture and GMOs, founder of Navdanya, a movement to protect native seeds and biodiversity.</div>
+        </div>
+        <div class="innovator-box">
+          <img src="images/3.jpg" alt="Joel Salatin" class="innovator-photo">
+          <div class="innovator-name">Joel Salatin</div>
+          <div class="innovator-country">USA</div>
+          <div class="innovator-known"><strong>Known for:</strong> Regenerative and holistic farming.</div>
+          <div class="innovator-contribution"><strong>Contribution:</strong> Operates Polyface Farm using rotational grazing and ethical animal farming. A vocal advocate for sustainable local food systems.</div>
+        </div>
+        <div class="innovator-box">
+          <img src="images/4.jpg" alt="Pamela Ronald" class="innovator-photo">
+          <div class="innovator-name">Pamela Ronald</div>
+          <div class="innovator-country">USA</div>
+          <div class="innovator-known"><strong>Known for:</strong> Genetic research in rice.</div>
+          <div class="innovator-contribution"><strong>Contribution:</strong> Works on developing rice varieties resistant to disease and flooding, improving global food security.</div>
+        </div>
+        <div class="innovator-box">
+          <img src="images/5.jpg" alt="Dr. M.S. Swaminathan" class="innovator-photo">
+          <div class="innovator-name">Dr. M.S. Swaminathan</div>
+          <div class="innovator-country">India</div>
+          <div class="innovator-known"><strong>Known as:</strong> "Father of the Indian Green Revolution."</div>
+          <div class="innovator-contribution"><strong>Contribution:</strong> Introduced high-yielding crop varieties and led agricultural reforms that helped India achieve self-sufficiency in food production.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 GrowSmart. All rights reserved.</p>
+  </footer>
+  <script>
+    function updateAuthNav() {
+      const isLoggedIn = localStorage.getItem('growsmart_logged_in') === 'true';
+      document.querySelector('.nav-signup').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-login').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-logout').style.display = isLoggedIn ? '' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthNav();
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('growsmart_logged_in');
+          updateAuthNav();
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

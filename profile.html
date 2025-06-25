@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - GrowSmart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .profile-container {
+      max-width: 400px;
+      margin: 3rem auto;
+      background: #eafbe7;
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 12px rgba(108,191,67,0.10);
+      padding: 2.5rem 1.5rem 2rem 1.5rem;
+      text-align: center;
+    }
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #b6e2b3;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+    }
+    .profile-name {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #388e3c;
+      margin-bottom: 0.3rem;
+    }
+    .profile-email {
+      color: #205c23;
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+    }
+    .profile-link {
+      color: #388e3c;
+      text-decoration: underline;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header id="home">
+    <nav>
+      <div class="logo">GrowSmart</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="plant-library.html">Plant Library</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="modern-agriculturists.html">Modern Agriculturists</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html" class="active">My Profile</a></li>
+        <li class="nav-auth nav-logout" style="display:none;"><a href="#" id="logout-link">Logout</a></li>
+        <li class="nav-auth nav-signup"><a href="signup.html">Sign Up</a></li>
+        <li class="nav-auth nav-login"><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="profile-container">
+    <img src="https://ui-avatars.com/api/?name=GrowSmart+User&background=b6e2b3&color=205c23&size=128" alt="Avatar" class="profile-avatar">
+    <div class="profile-name" id="profile-name">GrowSmart User</div>
+    <div class="profile-email" id="profile-email">kandregulachaitu@gmail.com</div>
+    <a href="reset-password.html" class="profile-link">Reset Password</a>
+  </div>
+  <footer>
+    <p>© 2025 GrowSmart. All rights reserved.</p>
+  </footer>
+  <script src="js/firebase.js"></script>
+  <script>
+    // Redirect to login if not logged in (Firebase)
+    firebaseAuthHelpers.onAuthStateChanged(function(user) {
+      if (!user) {
+        window.location.href = 'login.html';
+      } else {
+        document.getElementById('profile-name').textContent = user.displayName || 'GrowSmart User';
+        document.getElementById('profile-email').textContent = user.email;
+      }
+    });
+    // Navbar auth logic
+    function updateAuthNav() {
+      firebaseAuthHelpers.onAuthStateChanged(function(user) {
+        const isLoggedIn = !!user;
+        document.querySelector('.nav-signup').style.display = isLoggedIn ? 'none' : '';
+        document.querySelector('.nav-login').style.display = isLoggedIn ? 'none' : '';
+        document.querySelector('.nav-logout').style.display = isLoggedIn ? '' : 'none';
+      });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthNav();
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          firebaseAuthHelpers.signOut().then(function() {
+            updateAuthNav();
+            window.location.href = 'login.html';
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

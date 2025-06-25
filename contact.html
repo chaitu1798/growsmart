@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - GrowSmart</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">GrowSmart</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="plant-library.html">Plant Library</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="modern-agriculturists.html">Modern Agriculturists</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+        <li class="nav-auth nav-logout" style="display:none;"><a href="#" id="logout-link">Logout</a></li>
+        <li class="nav-auth nav-signup"><a href="signup.html">Sign Up</a></li>
+        <li class="nav-auth nav-login"><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="contact" class="fade-in contact-section">
+      <h2>Contact & Q&A</h2>
+      <form id="contact-form" class="contact-form-centered">
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+        <textarea id="question" name="question" placeholder="Your Question" required></textarea>
+        <button type="submit" class="submit-btn">Send</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 GrowSmart. All rights reserved.</p>
+  </footer>
+  <script src="js/script.js"></script>
+  <script>
+    function updateAuthNav() {
+      const isLoggedIn = localStorage.getItem('growsmart_logged_in') === 'true';
+      document.querySelector('.nav-signup').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-login').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-logout').style.display = isLoggedIn ? '' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthNav();
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('growsmart_logged_in');
+          updateAuthNav();
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+  <style>
+    .contact-section {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 0;
+    }
+    .contact-form-centered {
+      background: #eafbe7;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 12px rgba(108,191,67,0.10);
+      padding: 2rem 2.5rem;
+      max-width: 400px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin: 0 auto;
+    }
+    .contact-form-centered input,
+    .contact-form-centered textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 0.6rem;
+      border: 1px solid #b6e2b3;
+      font-size: 1rem;
+      resize: none;
+    }
+    .contact-form-centered textarea {
+      min-height: 110px;
+      max-height: 220px;
+    }
+    .contact-form-centered button {
+      background: #388e3c;
+      color: #fff;
+      border: none;
+      border-radius: 0.6rem;
+      padding: 0.9rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .contact-form-centered button:hover {
+      background: #205c23;
+    }
+    @media (max-width: 600px) {
+      .contact-form-centered {
+        padding: 1.2rem 0.7rem;
+        max-width: 98vw;
+      }
+      .contact-section {
+        padding: 1rem 0.2rem;
+      }
+      .contact-form-centered input,
+      .contact-form-centered textarea {
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</body>
+</html> 

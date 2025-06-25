@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stories - GrowSmart</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">GrowSmart</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="plant-library.html">Plant Library</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="stories.html" class="active">Stories</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="modern-agriculturists.html">Modern Agriculturists</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+        <li class="nav-auth nav-logout" style="display:none;"><a href="#" id="logout-link">Logout</a></li>
+        <li class="nav-auth nav-signup"><a href="signup.html">Sign Up</a></li>
+        <li class="nav-auth nav-login"><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="stories" class="fade-in">
+      <h2>Volunteer Stories</h2>
+      <div class="blog-entry">
+        <h3>🌿 Volunteer Story #1: Sarah's Journey from Novice to Nature Advocate</h3>
+        <p>"When I first joined the community garden project, I could barely tell a tulip from a turnip," laughs Sarah, a marketing professional who started volunteering once a week. Over time, she not only learned how to compost and grow seasonal vegetables, but also discovered a passion for sustainable gardening. "Now I run mini-workshops for school groups and have started a native plant garden in my apartment complex. This project has completely changed the way I see food and nature."</p>
+      </div>
+      <div class="blog-entry">
+        <h3>🌱 Volunteer Story #2: Raj's Contribution Brings a Neighborhood Together</h3>
+        <p>Raj, a retired engineer, began volunteering to stay active, but quickly found something deeper: community. "We turned an abandoned lot into a thriving green space. I use my skills to build irrigation systems and raised beds." Raj's technical expertise helped transform the space, but his biggest reward? "Seeing kids pick their first strawberries or elders sharing traditional planting tips—this garden has become our meeting ground."</p>
+      </div>
+      <div class="blog-entry">
+        <h3>🌼 Volunteer Story #3: Youth Volunteers Grow Confidence Alongside Plants</h3>
+        <p>Every Saturday, a group of teenagers from a local high school join the project. Maya, age 16, shares, "I used to be really shy, but helping plant the pollinator garden gave me confidence. Now I help lead tours for new volunteers." The project has become a place for personal growth as much as plant growth. "It feels good to be part of something real—something growing."</p>
+      </div>
+      <div class="blog-entry">
+        <h3>🌾 Volunteer Story #4: Healing Through Horticulture</h3>
+        <p>After losing her job during the pandemic, Elena joined the project while struggling with anxiety. "I didn't expect pulling weeds and planting flowers would be so therapeutic." The garden gave her routine, purpose, and a support network. "Volunteering here reminded me I have value—and now I've started a small business selling herbs we grew together.</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 GrowSmart. All rights reserved.</p>
+  </footer>
+  <script src="js/script.js"></script>
+  <script>
+    function updateAuthNav() {
+      const isLoggedIn = localStorage.getItem('growsmart_logged_in') === 'true';
+      document.querySelector('.nav-signup').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-login').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-logout').style.display = isLoggedIn ? '' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthNav();
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('growsmart_logged_in');
+          updateAuthNav();
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

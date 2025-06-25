@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrowSmart: A Horticulture Learning Hub</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .home-sections {
+      max-width: 900px;
+      margin: 2rem auto 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .info-section {
+      background: #eafbe7;
+      border-radius: 1rem;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 2px 12px rgba(108,191,67,0.06);
+    }
+    .info-section h2 {
+      font-weight: bold;
+      color: #388e3c;
+      margin-bottom: 0.7rem;
+    }
+    header, header#home {
+      border-radius: 0 0 2rem 2rem;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(56,142,60,0.07);
+    }
+    .nav-links a.active {
+      background: #b6e2b3;
+      color: #205c23 !important;
+      border-radius: 1.2rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(56,142,60,0.10);
+    }
+  </style>
+</head>
+<body>
+  <header id="home">
+    <nav>
+      <div class="logo">GrowSmart</div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="plant-library.html">Plant Library</a></li>
+        <li><a href="tutorials.html">Tutorials</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="modern-agriculturists.html">Modern Agriculturists</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+        <li class="nav-auth nav-logout" style="display:none;"><a href="#" id="logout-link">Logout</a></li>
+        <li class="nav-auth nav-signup"><a href="signup.html">Sign Up</a></li>
+        <li class="nav-auth nav-login"><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+    <div class="hero">
+      <h1>GrowSmart: A Horticulture Learning Hub</h1>
+      <p class="tagline">Cultivating Knowledge, Growing Together</p>
+      <p class="mission">Our mission: Empowering everyone to grow smarter, greener, and happier gardens.</p>
+      <div class="featured-tip">
+        <h2>Plant of the Month: <span id="featured-plant">Sunflower</span></h2>
+        <p id="featured-tip">Sunflowers love full sun and well-drained soil. Water regularly for tall, happy blooms!</p>
+      </div>
+    </div>
+  </header>
+  <div class="home-sections">
+    <section class="info-section">
+      <h2>Introduction to Horticulture</h2>
+      <p>Horticulture is the art and science of growing fruits, vegetables, flowers, and ornamental plants. It's a rewarding hobby and a vital skill for anyone interested in healthy living, sustainability, and connecting with nature. For beginners, horticulture offers a hands-on way to learn about plant care, food production, and the environment.</p>
+    </section>
+    <section class="info-section">
+      <h2>Mission of the Project</h2>
+      <p>GrowSmart is here to empower you—whether you're a curious beginner or a seasoned gardener—to grow smarter, greener, and happier gardens. Our friendly platform brings together practical tips, inspiring stories, and a supportive community to help you cultivate your skills and nurture a lifelong love for plants. Let's grow together!</p>
+    </section>
+    <section class="info-section">
+      <h2>Tips of the Month</h2>
+      <p><strong>June Tip:</strong> As summer heats up, mulch your garden beds to retain moisture and keep roots cool. Water early in the morning to reduce evaporation and help plants thrive during hot days!</p>
+    </section>
+  </div>
+  <main>
+    
+  </main>
+  <footer>
+    <p>© 2025 GrowSmart. All rights reserved.</p>
+  </footer>
+  <script src="js/script.js"></script>
+  <script>
+    // Auth navbar logic
+    function updateAuthNav() {
+      const isLoggedIn = localStorage.getItem('growsmart_logged_in') === 'true';
+      document.querySelector('.nav-signup').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-login').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-logout').style.display = isLoggedIn ? '' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthNav();
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('growsmart_logged_in');
+          updateAuthNav();
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - GrowSmart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .auth-container {
+      max-width: 400px;
+      margin: 3rem auto;
+      background: #eafbe7;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(108,191,67,0.08);
+      padding: 2rem 1.5rem 1.5rem 1.5rem;
+    }
+    .auth-container h2 {
+      text-align: center;
+      color: #388e3c;
+      margin-bottom: 1.5rem;
+    }
+    .auth-container label {
+      font-weight: bold;
+      color: #388e3c;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .auth-container input {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #b6e2b3;
+      font-size: 1rem;
+    }
+    .auth-container button {
+      width: 100%;
+      background: #388e3c;
+      color: #fff;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      transition: background 0.2s;
+    }
+    .auth-container button:hover {
+      background: #205c23;
+    }
+    .auth-container .success {
+      color: #205c23;
+      background: #d0f5c9;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .auth-container .link {
+      text-align: center;
+      display: block;
+      color: #388e3c;
+      text-decoration: underline;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+      <label for="confirm">Confirm Password</label>
+      <input type="password" id="confirm" name="confirm" required>
+      <button type="submit">Sign Up</button>
+    </form>
+    <div id="signup-success" class="success" style="display:none;">
+      Sign up successful! <br>
+      <a href="login.html" class="link">Go to Login</a>
+    </div>
+    <div style="text-align:center; margin-top:1rem;">
+      Already have an account? <a href="login.html" class="link">Login</a>
+    </div>
+  </div>
+  <script src="js/firebase.js"></script>
+  <script>
+    document.getElementById('signup-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var pw = document.getElementById('password').value;
+      var cpw = document.getElementById('confirm').value;
+      var email = document.getElementById('email').value.trim();
+      if (pw !== cpw) {
+        alert('Passwords do not match!');
+        return;
+      }
+      firebaseAuthHelpers.signUpWithEmail(email, pw)
+        .then(() => {
+          document.getElementById('signup-form').style.display = 'none';
+          document.getElementById('signup-success').style.display = 'block';
+        })
+        .catch(err => {
+          alert(err.message);
+        });
+    });
+    function updateAuthNav() {
+      const isLoggedIn = localStorage.getItem('growsmart_logged_in') === 'true';
+      document.querySelector('.nav-signup').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-login').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-logout').style.display = isLoggedIn ? '' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthNav();
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('growsmart_logged_in');
+          updateAuthNav();
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

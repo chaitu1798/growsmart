@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorials - GrowSmart</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">GrowSmart</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="plant-library.html">Plant Library</a></li>
+        <li><a href="tutorials.html" class="active">Tutorials</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="modern-agriculturists.html">Modern Agriculturists</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+        <li class="nav-auth nav-logout" style="display:none;"><a href="#" id="logout-link">Logout</a></li>
+        <li class="nav-auth nav-signup"><a href="signup.html">Sign Up</a></li>
+        <li class="nav-auth nav-login"><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="tutorials" class="fade-in">
+      <h2>Tutorials</h2>
+      <div class="tutorial-guide">
+        <h3>🌿 Urban Gardening Tips</h3>
+        <p><em>Grow more in less space — smart, sustainable, and simple!</em></p>
+
+        <h4>🔹 1. Choose the Right Location</h4>
+        <ul>
+          <li>Look for sunny spots: Most vegetables need at least 4–6 hours of sunlight daily.</li>
+          <li>Consider balconies, rooftops, patios, windowsills, or vertical walls.</li>
+          <li>Make sure the space has good air circulation and access to water.</li>
+        </ul>
+
+        <h4>🔹 2. Use Containers and Pots Wisely</h4>
+        <ul>
+          <li>Use recycled buckets, pots, crates, grow bags, or hanging baskets.</li>
+          <li>Ensure drainage holes are present to avoid root rot.</li>
+          <li>Use larger containers for deep-rooted plants (like tomatoes or carrots).</li>
+        </ul>
+
+        <h4>🔹 3. Choose Suitable Plants</h4>
+        <p>Pick plants that thrive in limited space and local climate:</p>
+        <ul>
+            <li><strong>Leafy greens:</strong> Lettuce, spinach, kale</li>
+            <li><strong>Herbs:</strong> Basil, mint, coriander, thyme</li>
+            <li><strong>Compact vegetables:</strong> Cherry tomatoes, chilies, radishes, bush beans</li>
+            <li><strong>Fruit (if space allows):</strong> Strawberries, dwarf citrus trees</li>
+        </ul>
+
+        <h4>🔹 4. Go Vertical</h4>
+        <ul>
+            <li>Install vertical planters, shelves, or trellises to save space.</li>
+            <li>Grow climbers like beans, peas, or cucumbers up a support.</li>
+            <li>Wall-mounted pots and hanging baskets can double your planting area.</li>
+        </ul>
+
+        <h4>🔹 5. Use Quality Soil and Compost</h4>
+        <ul>
+            <li>Use lightweight, nutrient-rich potting mix.</li>
+            <li>Mix in compost or organic manure to improve fertility.</li>
+            <li>Avoid heavy garden soil in containers—it compacts easily and drains poorly.</li>
+        </ul>
+
+        <h4>🔹 6. Water Smartly</h4>
+        <ul>
+            <li>Containers dry out faster—check daily.</li>
+            <li>Water in the early morning or evening to reduce evaporation.</li>
+            <li>Use self-watering pots, drip irrigation, or reuse kitchen water (without chemicals).</li>
+        </ul>
+
+        <h4>🔹 7. Fertilize Regularly</h4>
+        <ul>
+            <li>Container plants need more nutrients.</li>
+            <li>Use organic liquid fertilizers, compost tea, or diluted cow dung slurry every 2–3 weeks.</li>
+        </ul>
+
+        <h4>🔹 8. Start a Compost Bin</h4>
+        <ul>
+            <li>Recycle kitchen scraps and garden waste.</li>
+            <li>Create a small compost bin on your balcony or terrace.</li>
+            <li>Use the compost to feed your plants and reduce waste.</li>
+        </ul>
+
+        <h4>🔹 9. Pest Control Naturally</h4>
+        <ul>
+            <li>Use neem oil spray, soap spray, or garlic spray to manage pests.</li>
+            <li>Encourage beneficial insects like ladybugs.</li>
+            <li>Keep your garden clean and monitor plants regularly.</li>
+        </ul>
+
+        <h4>🔹 10. Be Creative and Sustainable</h4>
+        <ul>
+            <li>Repurpose old items (plastic bottles, crates, shoes) as planters.</li>
+            <li>Use rainwater harvesting if possible.</li>
+            <li>Plant pollinator-friendly flowers (marigold, lavender) alongside veggies</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 GrowSmart. All rights reserved.</p>
+  </footer>
+  <script src="js/script.js"></script>
+  <script>
+    function updateAuthNav() {
+      const isLoggedIn = localStorage.getItem('growsmart_logged_in') === 'true';
+      document.querySelector('.nav-signup').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-login').style.display = isLoggedIn ? 'none' : '';
+      document.querySelector('.nav-logout').style.display = isLoggedIn ? '' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthNav();
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.removeItem('growsmart_logged_in');
+          updateAuthNav();
+          window.location.href = 'login.html';
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

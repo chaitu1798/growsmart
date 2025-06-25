@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - GrowSmart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .auth-container {
+      max-width: 400px;
+      margin: 3rem auto;
+      background: #eafbe7;
+      border-radius: 1rem;
+      box-shadow: 0 2px 12px rgba(108,191,67,0.08);
+      padding: 2rem 1.5rem 1.5rem 1.5rem;
+    }
+    .auth-container h2 {
+      text-align: center;
+      color: #388e3c;
+      margin-bottom: 1.5rem;
+    }
+    .auth-container label {
+      font-weight: bold;
+      color: #388e3c;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .auth-container input {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #b6e2b3;
+      font-size: 1rem;
+    }
+    .auth-container button {
+      width: 100%;
+      background: #388e3c;
+      color: #fff;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 1rem;
+      transition: background 0.2s;
+    }
+    .auth-container button:hover {
+      background: #205c23;
+    }
+    .auth-container .error {
+      color: #b71c1c;
+      background: #ffeaea;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .auth-container .link {
+      text-align: center;
+      display: block;
+      color: #388e3c;
+      text-decoration: underline;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h2>Login</h2>
+    <form id="login-form">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Login</button>
+    </form>
+    <div id="login-error" class="error">Incorrect email or password.</div>
+    <div style="text-align:center; margin-top:1rem;">
+      <a href="reset-password.html" class="link">Forgot Password?</a>
+    </div>
+    <div style="text-align:center; margin-top:1rem;">
+      Don't have an account? <a href="signup.html" class="link">Sign Up</a>
+    </div>
+  </div>
+  <script src="js/firebase.js"></script>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = document.getElementById('email').value.trim();
+      var pw = document.getElementById('password').value;
+      firebaseAuthHelpers.signInWithEmail(email, pw)
+        .then(() => {
+          window.location.href = 'index.html';
+        })
+        .catch(err => {
+          document.getElementById('login-error').textContent = err.message;
+          document.getElementById('login-error').style.display = 'block';
+        });
+    });
+    // Google sign-in
+    function googleLogin() {
+      firebaseAuthHelpers.signInWithGoogle()
+        .then(() => {
+          window.location.href = 'index.html';
+        })
+        .catch(err => {
+          document.getElementById('login-error').textContent = err.message;
+          document.getElementById('login-error').style.display = 'block';
+        });
+    }
+  </script>
+  <div style="text-align:center; margin-top:1rem;">
+    <button type="button" onclick="googleLogin()" style="background:#fff;color:#444;border:1px solid #b6e2b3;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:0.7rem 0;font-weight:bold;">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width:22px;vertical-align:middle;"> Sign in with Google
+    </button>
+  </div>
+</body>
+</html> 
